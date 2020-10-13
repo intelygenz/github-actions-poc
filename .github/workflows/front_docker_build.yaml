@@ -18,12 +18,11 @@ jobs:
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v2
         with:
-          username: ${{ github.actor }}
-          password: ${{ secrets.GITHUB_TOKEN }}
+          context: ./
           registry: docker.pkg.github.com
           platforms: linux/amd64,linux/arm64
           repository: intelygenz/github-actions-poc
           push: false
           tags: |
-            user/app:latest
-            user/app:1.0.0
+            intelygenz/github-actions-poc:latest
+            intelygenz/github-actions-poc:1.0.0
