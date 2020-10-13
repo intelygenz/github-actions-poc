@@ -2,8 +2,10 @@ name: Front/Tests
 
 on:
   push:
+    branches-ignore:
+      - main
     tags-ignore:
-      - release-*
+      - release*
     paths:
       - "front/**/*"
 
