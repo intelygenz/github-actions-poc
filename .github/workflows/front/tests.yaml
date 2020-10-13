@@ -1,9 +1,11 @@
-name: FRONT
+name: Front
 
 on:
   push:
+    branches:
+      - !main
     paths:
-    - 'front/**'
+    - 'front/**/*'
 
 jobs:
   test-front:
@@ -20,12 +22,4 @@ jobs:
           yarn install
           yarn test
         working-directory: ./front
-  
-  docker-build:
-    runs-on: ubuntu-latest    
-    steps:
-      - name: Set up QEMU
-        uses: docker/setup-qemu-action@v1
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v1
