@@ -5,7 +5,7 @@ on:
     branches-ignore:
       - main
     tags-ignore:
-      - release-0.15
+      - release0.1
     paths:
       - "front/**/*"
 
