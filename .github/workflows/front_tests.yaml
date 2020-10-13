@@ -3,7 +3,10 @@ name: Front/Tests
 on:
   push:
     branches-ignore:
-      - front/tests-and-docker-build
+      - main
+      - "release-*"
+    tags-ignore:
+      - "release-*"
     paths:
       - "front/**/*"
 
