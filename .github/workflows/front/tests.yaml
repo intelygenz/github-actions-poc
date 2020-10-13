@@ -3,7 +3,7 @@ name: Front
 on:
   push:
     branches:
-      - !main
+      - '!main'
     paths:
     - 'front/**/*'
 
