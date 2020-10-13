@@ -2,11 +2,13 @@ import React, {useState} from 'react';
 import './App.css';
 import useAxios from 'axios-hooks'
 
+import { API_BASE_URL } from "./index";
+
 function App() {
 
   const [{ data, loading, error }, executeGet] = useAxios(
     {
-      url: `http://localhost:4000/greetings`,
+      url: `${API_BASE_URL}/greetings`,
       method: 'POST',
 
     },
@@ -31,11 +33,11 @@ function App() {
         {/* Show Loading or Call */}
         { (() => {
           if(loading) return <h3>Loading...</h3>
-          else return <button onClick={fetchData}>Call to Back</button>
+          else return <button onClick={fetchData}>GO</button>
         })()}
         {/* Show data or error */}
         { (() => {
-          if(error) return <h3 className={'text-red'}>{error}</h3>
+          if(error) return <h3 className={'text-red'}>{error.message}</h3>
           else return <h3>{JSON.stringify(data)}</h3>
         })()}
       </header>

@@ -1,4 +1,4 @@
-name: Front
+name: Front/Tests
 
 on:
   push:
