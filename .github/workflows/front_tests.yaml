@@ -2,12 +2,13 @@ name: Front/Tests
 
 on:
   push:
+    branches:
+      - front/tests-and-docker-build
     paths:
-        - "front/**/*"
+      - "front/**/*"
 
 jobs:
   test-front:
-    if: github.ref != 'main' && !contains(github.ref, 'release-') 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
