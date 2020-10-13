@@ -2,13 +2,12 @@ name: Front
 
 on:
   push:
-    branches-ignore:
-      - main
     paths:
         - "front/**/*"
 
 jobs:
   test-front:
+    if: github.ref != 'main'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
