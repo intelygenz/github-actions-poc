@@ -4,9 +4,9 @@ on:
   push:
     branches-ignore:
       - main
-      - "release-*"
+      - "release-**"
     tags-ignore:
-      - "release-*"
+      - "release-**"
     paths:
       - "front/**/*"
 
