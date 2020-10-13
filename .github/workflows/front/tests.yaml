@@ -2,8 +2,8 @@ name: Front
 
 on:
   push:
-    branches:
-      - '!main'
+    branches-ignore:
+      - main
     paths:
     - 'front/**/*'
 
