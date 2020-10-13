@@ -2,10 +2,8 @@ name: FRONT
 
 on:
   push:
-    branches:
-      - '!master'
     paths:
-    - 'front/**/*'
+    - 'front/**'
 
 jobs:
   test-front:
