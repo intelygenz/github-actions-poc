@@ -7,7 +7,7 @@ on:
 
 jobs:
   test-front:
-    if: github.ref != 'main'
+    if: github.ref != 'main' && !contains(github.ref, 'release-') 
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
