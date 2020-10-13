@@ -6,7 +6,7 @@ on:
       - main
       - "release-**"
     tags-ignore:
-      - "release-**"
+      - 'release-**'
     paths:
       - "front/**/*"
 
