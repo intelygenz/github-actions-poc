@@ -27,4 +27,4 @@ jobs:
           file: back/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: intelygenz/back:latest
+          tags: terminus7/back-poc:latest
