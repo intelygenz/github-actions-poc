@@ -22,6 +22,10 @@ jobs:
           username: ${{ github.repository_owner }}
           password: ${{ secrets.CR_PAT }}
 
+      - name: Get Version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/release-}
+
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v2
         with:
@@ -30,4 +34,4 @@ jobs:
           push: true
           tags: |
             ghcr.io/intelygenz/github-actions-poc/front:latest
-            ghcr.io/intelygenz/github-actions-poc/front:${GITHUB_REF#refs/tags/}
+            ghcr.io/intelygenz/github-actions-poc/front:${{ steps.get_version.outputs.VERSION }}
