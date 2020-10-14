@@ -29,5 +29,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            intelygenz/github-actions-poc:latest
-            intelygenz/github-actions-poc:1.0.0
+            ghcr.io/intelygenz/github-actions-poc:latest
+            ghcr.io/intelygenz/github-actions-poc:1.0.0
