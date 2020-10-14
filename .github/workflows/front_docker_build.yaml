@@ -31,4 +31,4 @@ jobs:
           push: true
           tags: |
             intelygenz/github-actions-poc:latest
-            intelygenz/github-actions-poc:${{ github.ref }}
+            intelygenz/github-actions-poc:1.0.0
