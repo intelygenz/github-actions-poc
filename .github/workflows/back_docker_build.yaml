@@ -32,4 +32,6 @@ jobs:
           file: back/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ghcr.io/intelygenz/github-actions-poc/back:${{ steps.get_version.outputs.VERSION }}
+          tags: |
+            ghcr.io/intelygenz/github-actions-poc/back:${{ steps.get_version.outputs.VERSION }}
+            ghcr.io/intelygenz/github-actions-poc/back:latest
