@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"net/http"
+	"os"
 
 	"github.com/gin-gonic/gin"
 )
@@ -12,7 +13,15 @@ type greetings struct {
 }
 
 func main() {
-	setupServer().Run(":3000")
+	p := os.Getenv("PORT")
+	if p == "" {
+		p = "3000"
+	}
+
+	err := setupServer().Run(fmt.Sprintf(":%s", p))
+	if err != nil {
+		panic(err)
+	}
 }
 
 func setupServer() *gin.Engine {
