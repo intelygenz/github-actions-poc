@@ -32,6 +32,4 @@ jobs:
           file: front/Dockerfile
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: |
-            ghcr.io/intelygenz/github-actions-poc/front:latest
-            ghcr.io/intelygenz/github-actions-poc/front:${{ steps.get_version.outputs.VERSION }}
+          tags: ghcr.io/intelygenz/github-actions-poc/front:${{ steps.get_version.outputs.VERSION }}
