@@ -4,6 +4,6 @@ import App from './App';
 
 test('title poc worflow is rendered', () => {
   const { getByText } = render(<App />);
-  const linkElement = getByText(/POC WORKFLOW DEMO FRONT/i);
+  const linkElement = getByText(/POC WORKFLOW/i);
   expect(linkElement).toBeInTheDocument();
 });
