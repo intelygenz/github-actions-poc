@@ -45,7 +45,9 @@ input {
 
 button {
   background-color: #61dafb;
-  margin-top: 30px;
   height: 44px;
   font-size: 30px;
+  color: whitesmoke;
+  border-radius: 15px;
+  border: solid 2px white;
 }
