@@ -1,0 +1,20 @@
+name: FeatPreRelease
+
+on:
+  pull_request:
+      branches:
+        - feat/*
+
+jobs:
+  generate-prerelease:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+      - uses: paulhatch/semantic-version@v3
+        with:
+          # The branch to count commits on
+          branch: "feat/*"
+          # A string to determine the format of the version output
+          format: "${major}.${minor}-alpha.${increment}"
+
