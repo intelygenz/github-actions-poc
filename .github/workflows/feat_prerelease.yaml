@@ -11,11 +11,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v2
         with:
-          fetch-depth: 0
-      - uses: paulhatch/semantic-version@v3
-        with:
-          branch: ${{github.ref}}
-          # A string to determine the format of the version output
-          format: "${major}.${minor}-alpha.${increment}"
-
+          dry_run: true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
