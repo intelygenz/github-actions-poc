@@ -15,6 +15,7 @@ jobs:
           fetch-depth: 0
       - uses: paulhatch/semantic-version@v3
         with:
+          branch: "main"
           # A string to determine the format of the version output
           format: "${major}.${minor}-alpha.${increment}"
 
