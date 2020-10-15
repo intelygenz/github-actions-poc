@@ -1,0 +1,28 @@
+name: Front/Tests
+
+on:
+  push:
+    branches-ignore:
+      - main
+      - release*
+    tags-ignore:
+      - release*
+    paths:
+      - "front/**/*"
+
+jobs:
+  test-front:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "14"
+
+      - name: Run tests
+        run: |
+          yarn install
+          yarn test
+        working-directory: ./front
+
