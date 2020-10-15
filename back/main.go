@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
 	"net/http"
 	"os"
-
-	"github.com/gin-gonic/gin"
 )
 
 type greetings struct {
@@ -26,7 +26,10 @@ func main() {
 
 func setupServer() *gin.Engine {
 	r := gin.Default()
-
+	r.Use(cors.New(cors.Config{
+		AllowOrigins:     []string{"*"},
+		AllowHeaders:     []string{"*"},
+	}))
 	r.POST("/greetings", handlerGreetings)
 
 	return r
