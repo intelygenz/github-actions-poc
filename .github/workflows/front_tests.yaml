@@ -53,6 +53,14 @@ jobs:
         with:
           name: front-test-report
           path: front/test-report.xml
+      - name: Run tests
+        run: | 
+          echo "--------current path--------"
+          pwd
+          echo "---------list of content --------"
+          ls
+          echo "------list front folder-------"
+          ls front
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         with:
