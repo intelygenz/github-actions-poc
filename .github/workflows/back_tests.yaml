@@ -31,7 +31,7 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: back-coverage-report
-          path: back-coverage.out
+          path: back/back-coverage.out
   
   sonarcloud:
     name: SonarCloud

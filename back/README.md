@@ -2,8 +2,7 @@
 
 This is a basic API REST writen in Golang and Gin framework.
 
-Just is exposed the endpoint `/greetings` allowing `POST`calls with a JSON with the field `name`
-like the next example.
+Expose the endpoint `/greetings` using method `POST` and the payload expect a JSON with the field `name` like the next example.
 
 ```json
 {
