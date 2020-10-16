@@ -23,7 +23,7 @@ jobs:
                 prerelease: true
               }
             ]
-          plugins: |
+          extra_plugins: |
             ["@semantic-release/commit-analyzer", {
               "preset": "angular",
               "releaseRules": [
