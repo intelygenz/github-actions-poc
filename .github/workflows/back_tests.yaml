@@ -12,6 +12,7 @@ on:
 
 jobs:
   test-back:
+    name: TestsBack
     # strategy:
     #   matrix:
     #     go-version: [1.14.x, 1.15.x]
@@ -36,6 +37,7 @@ jobs:
   sonarcloud:
     name: SonarCloud
     runs-on: ubuntu-latest
+    needs: test-back
     steps:
       - uses: actions/checkout@v2
         with:
@@ -44,7 +46,7 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: back-coverage-report
-          path: back-coverage.out
+          path: back/back-coverage.out
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         with:

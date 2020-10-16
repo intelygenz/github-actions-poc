@@ -15,3 +15,11 @@ and will return the string
 ```
 Greetings Your Name
 ```
+
+## Run tests
+
+In order to run the back tests with the coverage report perform the command below.
+
+```bash
+go test ./... -cover -v -coverprofile=back-coverage.out
+```
