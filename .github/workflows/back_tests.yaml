@@ -12,11 +12,11 @@ on:
 
 jobs:
   test-back:
-    strategy:
-      matrix:
-        go-version: [1.14.x, 1.15.x]
-        os: [ubuntu-latest, macos-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
+    # strategy:
+    #   matrix:
+    #     go-version: [1.14.x, 1.15.x]
+    #     os: [ubuntu-latest, macos-latest, windows-latest]
+    runs-on: ubuntu-latest
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -32,3 +32,23 @@ jobs:
         with:
           name: back-coverage-report
           path: back-coverage.out
+  
+  sonarcloud:
+    name: SonarCloud
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
+      - name: Download code coverage results
+        uses: actions/download-artifact@v1
+        with:
+          name: back-coverage-report
+          path: back-coverage.out
+      - name: SonarCloud Scan
+        uses: SonarSource/sonarcloud-github-action@master
+        with:
+          projectBaseDir: back
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+          SONAR_TOKEN: ${{ secrets.BACK_SONAR_TOKEN }}
