@@ -3,7 +3,7 @@ name: FeatPreRelease
 on:
   pull_request:
       branches:
-        - feat/*
+        - main
 
 jobs:
   generate-prerelease:
@@ -14,6 +14,22 @@ jobs:
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v2
         with:
-          dry_run: true
+          dry_run: tru
+          branch: ${{ github.ref }}
+          branches: |    
+            [
+              {
+                name: 'alpha', 
+                prerelease: true
+              }
+            ]
+          plugins: |
+            ["@semantic-release/commit-analyzer", {
+              "preset": "angular",
+              "releaseRules": [
+                {"type": "*", "release": "patch"},
+              ]
+            }]
+
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
