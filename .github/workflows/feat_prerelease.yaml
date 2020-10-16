@@ -15,21 +15,6 @@ jobs:
         uses: cycjimmy/semantic-release-action@v2
         with:
           dry_run: true
-          branch: feat/semantic-release-basic-approach
-          branches: |    
-            [
-              {
-                name: 'alpha', 
-                prerelease: true
-              }
-            ]
-          extra_plugins: |
-            ["@semantic-release/commit-analyzer", {
-              "preset": "angular",
-              "releaseRules": [
-                {"type": "*", "release": "patch"},
-              ]
-            }]
 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
