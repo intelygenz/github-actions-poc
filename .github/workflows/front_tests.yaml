@@ -53,20 +53,6 @@ jobs:
         with:
           name: front-test-report
           path: front/
-      - name: Check Workspace
-        run: | 
-          echo "--------current path--------"
-          pwd
-          echo "---------list of content --------"
-          ls
-          echo "------list front folder-------"
-          ls front
-          echo "----- list coverage content -----"
-          ls front/coverage
-          echo "--------- content of lcov"
-          cat front/coverage/lcov.info
-          echo "--------- content of test-report.xml"
-          ls front/test-report.xml
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         with:
