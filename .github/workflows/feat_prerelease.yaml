@@ -3,7 +3,7 @@ name: FeatPreRelease
 on:
   pull_request:
       branches:
-        - main
+        - feat/semantic-release-basic-approach
 
 jobs:
   generate-prerelease:
