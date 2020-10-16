@@ -21,7 +21,17 @@
     "start": "react-scripts start .env",
     "build": "react-scripts build",
     "test": "react-scripts test",
+    "test:cov:sonar": "react-scripts test --silent --env=jsdom --coverage --watchAll=false --testResultsProcessor jest-sonar-reporter",
     "eject": "react-scripts eject"
+  },
+  "jestSonar": {
+    "reportPath": "./",
+    "reportFile": "test-report.xml",
+    "indent": 4
+  },
+  "devDependencies": {
+    "eslint-config-sonar": "0.0.7",
+    "jest-sonar-reporter": "2.0.0"
   },
   "eslintConfig": {
     "extends": "react-app"
