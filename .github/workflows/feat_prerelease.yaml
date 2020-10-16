@@ -15,7 +15,7 @@ jobs:
         uses: cycjimmy/semantic-release-action@v2
         with:
           dry_run: tru
-          branch: ${{ github.ref }}
+          branch: main
           branches: |    
             [
               {
