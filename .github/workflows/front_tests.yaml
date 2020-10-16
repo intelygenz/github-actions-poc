@@ -63,8 +63,10 @@ jobs:
           ls front
           echo "----- list coverage content -----"
           ls front/coverage
+          echo "--------- content of lcov"
+          cat front/coverage/lcov.info
           echo "--------- content of test-report.xml"
-          cat front/test-report.xml
+          ls front/test-report.xml
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         with:
