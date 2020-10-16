@@ -15,7 +15,7 @@ jobs:
         uses: cycjimmy/semantic-release-action@v2
         with:
           dry_run: true
-          branch: main
+          branch: feat/semantic-release-basic-approach
           branches: |    
             [
               {
