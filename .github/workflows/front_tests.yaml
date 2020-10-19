@@ -54,7 +54,7 @@ jobs:
           name: front-test-report
           path: front/coverage
       - name: Fix code coverage paths
-        working-directory: ./coverage
+        working-directory: ./front/coverage
         run: |
           sed -i 's/\/home\/runner\/work\/github\-actions\-poc\/github\-actions\-poc//\/github\/workspace\//g' lcov.info
           sed -i 's/\/home\/runner\/work\/github\-actions\-poc\/github\-actions\-poc//\/github\/workspace\//g' test-report.xml
