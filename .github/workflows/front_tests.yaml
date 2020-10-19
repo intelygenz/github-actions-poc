@@ -56,9 +56,10 @@ jobs:
       - name: Fix code coverage paths
         working-directory: ./front/coverage
         run: |
-          sed -i 's|/\/home\/runner\/work\/github\-actions\-poc\/github\-actions\-poc\/|\/github\/workspace\/|g' lcov.info
+          sed -i 's|/home/runner/work/github-actions-poc/github-actions-poc/|/github/workspace/|g' lcov.info
           cat lcov.info
-          sed -i 's|\/home\/runner\/work\/github\-actions\-poc\/github\-actions\-poc\/|\/github\/workspace\/|g' test-report.xml
+          sed -i 's|/home/runner/work/github-actions-poc/github-actions-poc/|/github/workspace/|g' test-report.xml
+          cat test-report.xml
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         with:
