@@ -28,12 +28,9 @@ jobs:
         uses: actions/upload-artifact@v1
         with:
           name: front-coverage-report
-          path: front/coverage
-      - name: Archive test report
-        uses: actions/upload-artifact@v1
-        with:
-          name: front-test-report
-          path: front/test-report.xml
+          path: |
+            front/coverage
+            front/test-report.xml
 
   sonarcloud:
     name: SonarCloud
@@ -47,11 +44,6 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: front-coverage-report
-          path: front/coverage
-      - name: Download test report
-        uses: actions/download-artifact@v1
-        with:
-          name: front-test-report
           path: front/coverage
       - name: Fix code coverage paths
         working-directory: ./front/coverage
