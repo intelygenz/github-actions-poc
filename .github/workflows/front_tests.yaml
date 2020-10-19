@@ -3,7 +3,6 @@ name: Front/Tests
 on:
   push:
     branches-ignore:
-      - main
       - release*
     tags-ignore:
       - release*
