@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testExecutions version="1">
+    <file path="/home/workspace/front/src/App.test.tsx">
+        <testCase name="title poc worflow is rendered" duration="29">
+            <failure message="Error: App(...): Nothing was returned from render. This usually means a return statement is missing. Or, to render nothing, return null."><![CDATA[Error: App(...): Nothing was returned from render. This usually means a return statement is missing. Or, to render nothing, return null.
+    at reconcileChildFibers (/home/workspace/front/node_modules/react-dom/cjs/react-dom.development.js:14348:23)
+    at reconcileChildren (/home/workspace/front/node_modules/react-dom/cjs/react-dom.development.js:16762:28)
+    at mountIndeterminateComponent (/home/workspace/front/node_modules/react-dom/cjs/react-dom.development.js:17542:5)
+    at beginWork (/home/workspace/front/node_modules/react-dom/cjs/react-dom.development.js:18596:16)
+    at HTMLUnknownElement.callCallback (/home/workspace/front/node_modules/react-dom/cjs/react-dom.development.js:188:14)
+    at invokeEventListeners (/home/workspace/front/node_modules/jest-environment-jsdom/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:193:27)
+    at HTMLUnknownElementImpl._dispatch (/home/workspace/front/node_modules/jest-environment-jsdom/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:119:9)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/workspace/front/node_modules/jest-environment-jsdom/node_modules/jsdom/lib/jsdom/living/events/EventTarget-impl.js:82:17)
+    at HTMLUnknownElementImpl.dispatchEvent (/home/workspace/front/node_modules/jest-environment-jsdom/node_modules/jsdom/lib/jsdom/living/nodes/HTMLElement-impl.js:30:27)
+    at HTMLUnknownElement.dispatchEvent (/home/workspace/front/node_modules/jest-environment-jsdom/node_modules/jsdom/lib/jsdom/living/generated/EventTarget.js:157:21)
+    at Object.invokeGuardedCallbackDev (/home/workspace/front/node_modules/react-dom/cjs/react-dom.development.js:237:16)
+    at invokeGuardedCallback (/home/workspace/front/node_modules/react-dom/cjs/react-dom.development.js:292:31)
+    at beginWork$1 (/home/workspace/front/node_modules/react-dom/cjs/react-dom.development.js:23203:7)
+    at performUnitOfWork (/home/workspace/front/node_modules/react-dom/cjs/react-dom.development.js:22157:12)
+    at workLoopSync (/home/workspace/front/node_modules/react-dom/cjs/react-dom.development.js:22130:22)
+    at performSyncWorkOnRoot (/home/workspace/front/node_modules/react-dom/cjs/react-dom.development.js:21756:9)
+    at scheduleUpdateOnFiber (/home/workspace/front/node_modules/react-dom/cjs/react-dom.development.js:21188:7)
+    at updateContainer (/home/workspace/front/node_modules/react-dom/cjs/react-dom.development.js:24373:3)
+    at /home/workspace/front/node_modules/react-dom/cjs/react-dom.development.js:24758:7
+    at unbatchedUpdates (/home/workspace/front/node_modules/react-dom/cjs/react-dom.development.js:21903:12)
+    at legacyRenderSubtreeIntoContainer (/home/workspace/front/node_modules/react-dom/cjs/react-dom.development.js:24757:5)
+    at Object.render (/home/workspace/front/node_modules/react-dom/cjs/react-dom.development.js:24840:10)
+    at /home/workspace/front/node_modules/@testing-library/react/dist/pure.js:86:25
+    at batchedUpdates$1 (/home/workspace/front/node_modules/react-dom/cjs/react-dom.development.js:21856:12)
+    at act (/home/workspace/front/node_modules/react-dom/cjs/react-dom-test-utils.development.js:929:14)
+    at render (/home/workspace/front/node_modules/@testing-library/react/dist/pure.js:82:26)
+    at Object.<anonymous> (/home/workspace/front/src/App.test.tsx:6:3)
+    at Object.asyncJestTest (/home/workspace/front/node_modules/jest-jasmine2/build/jasmineAsyncInstall.js:102:37)
+    at /home/workspace/front/node_modules/jest-jasmine2/build/queueRunner.js:43:12
+    at new Promise (<anonymous>)
+    at mapper (/home/workspace/front/node_modules/jest-jasmine2/build/queueRunner.js:26:19)
+    at /home/workspace/front/node_modules/jest-jasmine2/build/queueRunner.js:73:41]]></failure>
+        </testCase>
+    </file>
+</testExecutions>
