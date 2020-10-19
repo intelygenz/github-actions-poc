@@ -25,7 +25,7 @@ jobs:
           yarn test:cov:sonar
         working-directory: ./front
       - name: Archive code coverage results
-        uses: actions/upload-artifact@v1
+        uses: actions/upload-artifact@v2
         with:
           name: front-coverage-report
           path: |
@@ -41,7 +41,7 @@ jobs:
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
       - name: Download code coverage results
-        uses: actions/download-artifact@v1
+        uses: actions/download-artifact@v2
         with:
           name: front-coverage-report
           path: front/coverage
