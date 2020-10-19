@@ -52,7 +52,12 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: front-test-report
-          path: front/
+          path: front/coverage
+      - name: Fix code coverage paths
+        working-directory: ./coverage
+        run: |
+          sed -i 's/\/home\/runner\/work\/github\-actions\-poc\/github\-actions\-poc//\/github\/workspace\//g' lcov.info
+          sed -i 's/\/home\/runner\/work\/github\-actions\-poc\/github\-actions\-poc//\/github\/workspace\//g' test-report.xml
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         with:
