@@ -1,0 +1,16 @@
+name: Create Release
+
+on:
+  workflow_dispatch:
+    inputs:
+      release:
+        description: 'Release version name'
+        required: true
+
+jobs:
+  create_branch:
+    runs-on: ubuntu-latest
+    steps:
+        - run: |
+            echo "The new release branch will be: ${{ github.event.inputs.release }}"
+        
