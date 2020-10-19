@@ -48,8 +48,6 @@ jobs:
       - name: Fix code coverage paths
         working-directory: ./front
         run: |
-          ls -la
-          ls -la coverage
           sed -i 's|/home/runner/work/github-actions-poc/github-actions-poc/|/github/workspace/|g' coverage/lcov.info
           sed -i 's|/home/runner/work/github-actions-poc/github-actions-poc/|/github/workspace/|g' test-report.xml
       - name: SonarCloud Scan
