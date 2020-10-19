@@ -4,13 +4,16 @@ on:
   workflow_dispatch:
     inputs:
       release:
-        description: 'Release version name'
+        description: 'Release version number'
         required: true
 
 jobs:
   create_branch:
     runs-on: ubuntu-latest
     steps:
-        - run: |
-            echo "The new release branch will be: ${{ github.event.inputs.release }}"
+        - uses: peterjgrainger/action-create-branch@v2.0.1
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          with:
+            branch: 'release-${{ github.event.inputs.release }}'
         
