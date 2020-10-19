@@ -46,7 +46,7 @@ jobs:
         uses: actions/download-artifact@v1
         with:
           name: back-coverage-report
-          path: back/back-coverage.out
+          path: back
       - name: SonarCloud Scan
         uses: SonarSource/sonarcloud-github-action@master
         with:
