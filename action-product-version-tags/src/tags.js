@@ -74,5 +74,3 @@ module.exports = function(octokit, owner, repo) {
     }
     return {calcTagBranch, createTag}
 }
-
-  
