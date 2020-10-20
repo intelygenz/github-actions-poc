@@ -13,8 +13,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           fetch-depth: 0
-      - name: TEST
-        uses: ./action-pre-release
+      - name: Generate release
+        uses: ./
         with:
           dry-run: true
           prefix: "release-"
