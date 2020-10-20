@@ -21,10 +21,7 @@ module.exports = function (octokit, owner, repo) {
         }
 
         return branchNames.reverse()
-      }
-      
-      
-      
+    }
     async function calcReleaseBranch(currentMajor, prefix) {
         
         try {

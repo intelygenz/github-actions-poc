@@ -6,8 +6,8 @@ const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
 const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/")
 
 // Initialize Modules
-const { calcReleaseBranch } = require('./src/branches')(octokit, owner, repo)
-const { calcTagBranch, createTag } = require('./src/tags')(octokit, owner, repo)
+const { calcReleaseBranch } = require('./branches')(octokit, owner, repo)
+const { calcTagBranch, createTag } = require('./tags')(octokit, owner, repo)
 
 // Input variables
 const dryRun =  core.getInput('dry-run') == "true" ? true : false
