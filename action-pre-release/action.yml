@@ -19,4 +19,4 @@ outputs:
     description: 'The new version that was created and tagged in the format of <major>.<minor>.<build>[.<pre-release-tag>]'
 runs:
   using: 'node12'
-  main: 'action-pre-release/index.js'
+  main: 'dist/index.js'

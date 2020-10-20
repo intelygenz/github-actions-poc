@@ -4,7 +4,7 @@ const github = require('@actions/github');
 const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
 const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/");
 
-const dryRun = Boolean(core.getInput('dry-run'));
+const dryRun =  core.getInput('dry-run') == "true" ? true : false;
 const prefix = core.getInput('prefix')
 const preRelease = core.getInput('pre-release');
 
@@ -18,12 +18,11 @@ async function main() {
       console.log("Generating prerelease")
       release = await calcTagBranch(release)
     }
-
     core.setOutput("release", release);
   
     if (!dryRun) createTag(release)
   
-    console.log("New Release: ",release)
+    console.log("🚀 New Release: ",release)
 
   } catch (error) {
     core.setFailed(error.message);
@@ -40,12 +39,42 @@ async function calcReleaseBranch(prefix) {
 
     let mayor = 0, minor = 0;
 
-    const branchesWithPrefix = branches.filter(branch => branch.name.match(`^${prefix}`)).reverse()
+    const regex = new RegExp(`^${prefix}(\\d+).(\\d+)$`, 'g')
+    const branchesWithPrefix = branches.filter(branch => {
+      if(branch.name.match(`^${prefix}[0-9]+.[0-9]+$`)) return true
+      return false
+    })
+
+    console.log("BRANCHES", branchesWithPrefix)
+
+
+
+    // branchesWithPrefix.sort(function(a, b){
+    //   console.log("A",regex.exec(a.name))
+    //   console.log("B",regex.exec(b.name))
+    //   // const [aMinor, aMayor] = regex.exec(a.name)
+    //   // const [bMinor, bMayor] = regex.exec(b.name)
+    //   // console.log("A", aMayor, aMinor)
+    //   // console.log("B", bMayor, bMinor)
+    //   // if (a es menor que b según criterio de ordenamiento) {
+    //   //   return -1;
+    //   // }
+    //   // if (a es mayor que b según criterio de ordenamiento) {
+    //   //   return 1;
+    //   // }
+    //   // // a debe ser igual b
+    //   // return 0;
+    // })
+
+    console.log(JSON.stringify(branchesWithPrefix.length))
+
+
+
+
     if(branchesWithPrefix.length === 0) {
       return `${prefix}${mayor}.${minor}`
     }
 
-    const regex = new RegExp(`^${prefix}(\\d).(\\d)$`, 'g')
     const releaseBranch = branchesWithPrefix[0]
     const matches = regex.exec(releaseBranch.name)
     mayor = parseInt(matches[1]);
@@ -59,19 +88,20 @@ async function calcReleaseBranch(prefix) {
 
 async function calcTagBranch(release) {
   try {
+    //TODO: Per page manage
     const { data:tags } = await octokit.repos.listTags({
       owner,
-      repo
+      repo,
+      per_page: 100
     });
 
-    const tagsWithPrefix = tags.filter(tag => tag.name.match(`^${release}-${preRelease}`)).reverse()
+    const tagsWithPrefix = tags.filter(tag => tag.name.match(`^${release}-${preRelease}`))
     if(tagsWithPrefix.length === 0) return `${release}-${preRelease}.0`
-
     const regex = new RegExp(`^${release}-${preRelease}.(\\d)$`, 'g')
     const releaseTag = tagsWithPrefix[0]
     const matches = regex.exec(releaseTag.name)
     bumpVersion = parseInt(matches[1]);
-    return `${release}-${prerelease}.${bumpVersion+1}`
+    return `${release}-${preRelease}.${bumpVersion+1}`
 
   } catch (error) {
     console.log(error)
@@ -80,14 +110,14 @@ async function calcTagBranch(release) {
 
 
 async function createTag(tagName) {
+  console.log("Creating tag")
   try {
-    const { data:branchData } = await octokit.repos.listBranches({
+    const { data:branchData } = await octokit.repos.getBranch({
       owner,
-      repo
+      repo,
+      branch: 'main'
     });
-    const mainBranchSHA = branchData.filter((elem) => {
-      if (elem.name === 'main') return elem
-    })[0].commit.sha
+    const mainBranchSHA = branchData.commit.sha
     console.log("SHA", mainBranchSHA)
     const { data:tagData } = await octokit.git.createTag({
       owner,
@@ -112,16 +142,3 @@ async function createTag(tagName) {
   }
 }
 
-async function searchTag(tagName) {
-  try {
-    const { data: tag} = await octokit.git.getRef({
-      owner,
-      repo,
-      ref: `tags/${tagName}`
-    })
-    console.log(tag)
-
-  } catch (error) {
-    console.log(error)
-  }
-}
