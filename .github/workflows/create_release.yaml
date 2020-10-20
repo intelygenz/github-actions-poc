@@ -3,9 +3,14 @@ name: CreateRelease
 on:
   workflow_dispatch:
     inputs:
-      release:
-        description: 'Release version number'
+      major:
+        description: 'Major version number'
         required: true
+        default: 'false'
+      minor:
+        description: 'Minor version number'
+        required: true
+        default: 'true'
 
 jobs:
   create_branch:
@@ -15,5 +20,5 @@ jobs:
           env:
             GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           with:
-            branch: 'release-${{ github.event.inputs.release }}'
+            branch: 'release-${{ github.event.inputs.major }}.${{ github.event.inputs.minor }}'
         
