@@ -2,10 +2,8 @@ name: Back/Tests
 
 on:
   push:
-    branches-ignore:
-      - release*
     tags-ignore:
-      - release*
+      - v*
     paths:
       - "back/**/*"
 
