@@ -4,10 +4,16 @@ branding:
   icon: 'tag'
   color: 'purple'
 inputs:
-  pattern:
-    description: 'The branch to use for stable releases in production. Default is master'
+  dry-run:
+    description: 'Enable dry run mode'
     required: false
-    default: master
+    default: 'false'
+  prefix:
+    description: 'Release prefix'
+    required: false
+  pre-release:
+    description: 'A prerelease'
+    required: false
 outputs:
   tag:
     description: 'The new version that was created and tagged in the format of <major>.<minor>.<build>[.<pre-release-tag>]'

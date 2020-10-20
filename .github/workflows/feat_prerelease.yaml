@@ -16,6 +16,10 @@ jobs:
       - name: TEST
         uses: ./action-pre-release
         with:
-          dry_run: true
+          dry-run: true
+          prefix: "release-"
+          pre-release: 'alpha'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+# - De las branches que sean release- cojo la ultima branch, y le sumo 1 y cojo las tags que cumpla
