@@ -1,22 +1,30 @@
-name: 'pre-release'
-description: 'Provides automated versioning of your commits using git tags each time your CI/CD workflow runs.'
+name: 'product-version-tags'
+description: 'Generate version tags on a product lifecycle'
 branding:
   icon: 'tag'
-  color: 'purple'
+  color: 'gray-dark'
 inputs:
   dry-run:
     description: 'Enable dry run mode'
     required: false
     default: 'false'
+  current-major:
+    description: 'Current major'
+    required: true
   prefix:
     description: 'Release prefix'
     required: false
   pre-release:
     description: 'A prerelease'
     required: false
+  default-branch:
+    description: "Default branch to create a version tag"
+    required: false
+    default: 'main'
+
 outputs:
   tag:
     description: 'The new version that was created and tagged in the format of <major>.<minor>.<build>[.<pre-release-tag>]'
 runs:
   using: 'node12'
-  main: 'dist/index.js'
+  main: 'action-product-version-tags/dist/index.js'
