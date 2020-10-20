@@ -1,12 +1,11 @@
-name: FeatPreRelease
+name: PreReleaseTag
 
 on:
-  push:
-    branches:
-      - test/branch
-  # workflow_dispatch:
-  #   branches:
-  #     - test/branch
+  workflow_run:
+    workflows: ["Back/Tests", "Front/Tests"]
+    branches: [main]
+    types: 
+      - completed
 
 jobs:
   generate-prerelease:
@@ -14,11 +13,11 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Generate release
+      - name: Generate pre release tag
         uses: ./action-product-version-tags
         with:
           dry-run: true
-          current-major: 1
+          current-major: 0
           prefix: "release-"
           pre-release: 'alpha'
         env:
