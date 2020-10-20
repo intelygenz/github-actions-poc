@@ -17,7 +17,7 @@ jobs:
         uses: ./action-product-version-tags
         with:
           dry-run: true
-          current-major: 0
+          current-major: 1
           prefix: "release-"
           pre-release: 'alpha'
         env:
