@@ -16,7 +16,6 @@ jobs:
       - name: Generate pre release tag
         uses: ./action-product-version-tags
         with:
-          dry-run: true
           current-major: 1
           prefix: "release-"
           pre-release: 'alpha'
