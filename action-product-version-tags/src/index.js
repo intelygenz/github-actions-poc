@@ -1,13 +1,17 @@
 const core = require('@actions/core')
-const github = require('@actions/github')
+const github = require('@actions/github');
+
 
 // Initialize Octokit
 const octokit = github.getOctokit(process.env.GITHUB_TOKEN)
 const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/")
 
 // Initialize Modules
+const {readWorkflowsAndFilterByName} = require('./workflows')
+
 const { calcReleaseBranch } = require('./branches')(octokit, owner, repo)
 const { calcTagBranch, createTag } = require('./tags')(octokit, owner, repo)
+
 
 // Input variables
 const dryRun =  core.getInput('dry-run') == "true" ? true : false
@@ -19,41 +23,65 @@ const defaultBranch = core.getInput('default-branch')
 main()
 
 async function main() {
-  console.log("GITHUB:", JSON.stringify(github, null, 2))
-  console.log("CONTEXT:", JSON.stringify(github.context, null, 2))
+  try {
+    const workflows = readWorkflowsAndFilterByName(github.context.workflow)
+    const success = await checkWorkflowDeps(workflows.on.workflow_run.workflows, github.context.sha)
+    if(!success) return console.log("Action skipped because another workflows for the same commit are in progress")
+    runPrelease()
 
-  //checkWorkflowDeps()
-  //runPrelease()
+  } catch (err) {
+    console.log(err)
+  }
 }
 
-async function checkWorkflowDeps() {
+
+
+async function checkWorkflowDeps(workflows, sha) {
 
   const { data: listRepoWorkflows } = await octokit.actions.listRepoWorkflows({
     owner,
     repo,
   });
 
-  // const workflowId = listRepoWorkflows.workflows.find(repo => repo.name.match("PreReleaseTag"))
-
-  // console.log(workflowId)
-
-  // const { data } = await octokit.actions.listWorkflowRuns({
-  //   owner,
-  //   repo,
-  //   workflow_id:"3095081"
-  // });
+  const workflowIDs = listRepoWorkflows.workflows
+    .filter(repoWorkflow => workflows.includes(repoWorkflow.name))
+    .map(repoWorkflow => repoWorkflow.id)
 
 
-  const jobs = await octokit.actions.listJobsForWorkflowRun({
-    owner: owner,
-    repo: repo,
-    run_id: "318040286",
-    filter: 'latest'
+  const getData = async () => {
+    return Promise.all(
+      workflowIDs.map(async (workflowId) => {
+        const { data: workflowRunsObject } = await octokit.actions.listWorkflowRuns({
+         owner,
+         repo,
+         workflow_id: workflowId,
+         filter: 'latest'
+       });
+   
+       const commitWorkflows = workflowRunsObject.workflow_runs
+         .filter(workflowRun => workflowRun.head_sha === sha)
+   
+   
+         const successWorkflows = commitWorkflows.filter(workflowRun => workflowRun.conclusion === "success")
+       return Promise.resolve({commitWorkflows: commitWorkflows.length, successWorkflows: successWorkflows.length})
+     })
+    )
+  }
+
+  let commitWorkflowsLength = 0;
+  let successWorkflowsLength = 0;
+
+  const results = await getData()
+  results.map( row => {
+    commitWorkflowsLength += row.commitWorkflows
+    successWorkflowsLength += row.successWorkflows
   })
 
-  
-  
-   console.log("DATA: ",JSON.stringify(jobs, null, 2))
+  console.log("commitWorkflowsLength",commitWorkflowsLength)
+  console.log("successWorkflowsLength",successWorkflowsLength)
+
+
+  return commitWorkflowsLength === successWorkflowsLength
 }
 
 async function runPrelease() {
