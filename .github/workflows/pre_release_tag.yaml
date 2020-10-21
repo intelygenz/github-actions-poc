@@ -1,9 +1,6 @@
 name: PreReleaseTag
 
 on:
-  push:
-    branches:
-      - "test/branch"
   workflow_run:
     workflows: ["Back/Tests", "Front/Tests"]
     branches: [main]
