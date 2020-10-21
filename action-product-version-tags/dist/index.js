@@ -10005,17 +10005,15 @@ const defaultBranch = core.getInput('default-branch')
 main()
 
 async function main() {
-  // console.log("GITHUB:", JSON.stringify(github, null, 2))
-  // console.log("CONTEXT:", JSON.stringify(github.context, null, 2))
   try {
     const workflows = readWorkflowsAndFilterByName(github.context.workflow)
-    console.log("WORKFLOW:", workflows.on.workflow_run.workflows)
-    // console.log("SHA: ", github.context.sha)
-    checkWorkflowDeps(workflows.on.workflow_run.workflows, "3733f766d215d0fc69750b851214d42a36db3180")
+    const success = await checkWorkflowDeps(workflows.on.workflow_run.workflows, github.context.sha)
+    if(!success) return console.log("Action skipped because another workflows for the same commit are in progress")
+    runPrelease()
+
   } catch (err) {
     console.log(err)
   }
-  //runPrelease()
 }
 
 
@@ -10045,8 +10043,8 @@ async function checkWorkflowDeps(workflows, sha) {
        const commitWorkflows = workflowRunsObject.workflow_runs
          .filter(workflowRun => workflowRun.head_sha === sha)
    
-   
-         const successWorkflows = commitWorkflows.filter(workflowRun => workflowRun.conclusion === "success")
+       console.log(JSON.stringify(commitWorkflows, null, 2)) 
+       const successWorkflows = commitWorkflows.filter(workflowRun => workflowRun.conclusion === "success")
        return Promise.resolve({commitWorkflows: commitWorkflows.length, successWorkflows: successWorkflows.length})
      })
     )
