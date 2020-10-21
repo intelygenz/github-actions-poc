@@ -61,8 +61,8 @@ async function checkWorkflowDeps(workflows, sha) {
        const commitWorkflows = workflowRunsObject.workflow_runs
          .filter(workflowRun => workflowRun.head_sha === sha)
    
-   
-         const successWorkflows = commitWorkflows.filter(workflowRun => workflowRun.conclusion === "success")
+       console.log(JSON.stringify(commitWorkflows, null, 2)) 
+       const successWorkflows = commitWorkflows.filter(workflowRun => workflowRun.conclusion === "success")
        return Promise.resolve({commitWorkflows: commitWorkflows.length, successWorkflows: successWorkflows.length})
      })
     )
