@@ -1285,56 +1285,7 @@ var request = __webpack_require__(138);
 var graphql = __webpack_require__(718);
 var authToken = __webpack_require__(115);
 
-function _defineProperty(obj, key, value) {
-  if (key in obj) {
-    Object.defineProperty(obj, key, {
-      value: value,
-      enumerable: true,
-      configurable: true,
-      writable: true
-    });
-  } else {
-    obj[key] = value;
-  }
-
-  return obj;
-}
-
-function ownKeys(object, enumerableOnly) {
-  var keys = Object.keys(object);
-
-  if (Object.getOwnPropertySymbols) {
-    var symbols = Object.getOwnPropertySymbols(object);
-    if (enumerableOnly) symbols = symbols.filter(function (sym) {
-      return Object.getOwnPropertyDescriptor(object, sym).enumerable;
-    });
-    keys.push.apply(keys, symbols);
-  }
-
-  return keys;
-}
-
-function _objectSpread2(target) {
-  for (var i = 1; i < arguments.length; i++) {
-    var source = arguments[i] != null ? arguments[i] : {};
-
-    if (i % 2) {
-      ownKeys(Object(source), true).forEach(function (key) {
-        _defineProperty(target, key, source[key]);
-      });
-    } else if (Object.getOwnPropertyDescriptors) {
-      Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
-    } else {
-      ownKeys(Object(source)).forEach(function (key) {
-        Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
-      });
-    }
-  }
-
-  return target;
-}
-
-const VERSION = "3.1.2";
+const VERSION = "3.1.3";
 
 class Octokit {
   constructor(options = {}) {
@@ -1366,9 +1317,7 @@ class Octokit {
     }
 
     this.request = request.request.defaults(requestDefaults);
-    this.graphql = graphql.withCustomRequest(this.request).defaults(_objectSpread2(_objectSpread2({}, requestDefaults), {}, {
-      baseUrl: requestDefaults.baseUrl.replace(/\/api\/v3$/, "/api")
-    }));
+    this.graphql = graphql.withCustomRequest(this.request).defaults(requestDefaults);
     this.log = Object.assign({
       debug: () => {},
       info: () => {},
@@ -1376,7 +1325,7 @@ class Octokit {
       error: console.error.bind(console)
     }, options.log);
     this.hook = hook; // (1) If neither `options.authStrategy` nor `options.auth` are set, the `octokit` instance
-    //     is unauthenticated. The `this.auth()` method is a no-op and no request hook is registred.
+    //     is unauthenticated. The `this.auth()` method is a no-op and no request hook is registered.
     // (2) If only `options.auth` is set, use the default token authentication strategy.
     // (3) If `options.authStrategy` is set then use it and pass in `options.auth`. Always pass own request as many strategies accept a custom request instance.
     // TODO: type `options.auth` based on `options.authStrategy`.
@@ -5885,6 +5834,44 @@ const defaultBranch = core.getInput('default-branch')
 main()
 
 async function main() {
+  console.log("GITHUB:", JSON.stringify(github, null, 2))
+  console.log("CONTEXT:", JSON.stringify(github.context, null, 2))
+
+  //checkWorkflowDeps()
+  //runPrelease()
+}
+
+async function checkWorkflowDeps() {
+
+  const { data: listRepoWorkflows } = await octokit.actions.listRepoWorkflows({
+    owner,
+    repo,
+  });
+
+  // const workflowId = listRepoWorkflows.workflows.find(repo => repo.name.match("PreReleaseTag"))
+
+  // console.log(workflowId)
+
+  // const { data } = await octokit.actions.listWorkflowRuns({
+  //   owner,
+  //   repo,
+  //   workflow_id:"3095081"
+  // });
+
+
+  const jobs = await octokit.actions.listJobsForWorkflowRun({
+    owner: owner,
+    repo: repo,
+    run_id: "318040286",
+    filter: 'latest'
+  })
+
+  
+  
+   console.log("DATA: ",JSON.stringify(jobs, null, 2))
+}
+
+async function runPrelease() {
   try {    
     let release = await calcReleaseBranch(currentMajor, prefix)
     if (preRelease) {
@@ -5985,7 +5972,6 @@ module.exports = function(octokit, owner, repo) {
     return {calcTagBranch, createTag}
 }
 
-  
 
 /***/ }),
 

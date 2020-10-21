@@ -19,6 +19,44 @@ const defaultBranch = core.getInput('default-branch')
 main()
 
 async function main() {
+  console.log("GITHUB:", JSON.stringify(github, null, 2))
+  console.log("CONTEXT:", JSON.stringify(github.context, null, 2))
+
+  //checkWorkflowDeps()
+  //runPrelease()
+}
+
+async function checkWorkflowDeps() {
+
+  const { data: listRepoWorkflows } = await octokit.actions.listRepoWorkflows({
+    owner,
+    repo,
+  });
+
+  // const workflowId = listRepoWorkflows.workflows.find(repo => repo.name.match("PreReleaseTag"))
+
+  // console.log(workflowId)
+
+  // const { data } = await octokit.actions.listWorkflowRuns({
+  //   owner,
+  //   repo,
+  //   workflow_id:"3095081"
+  // });
+
+
+  const jobs = await octokit.actions.listJobsForWorkflowRun({
+    owner: owner,
+    repo: repo,
+    run_id: "318040286",
+    filter: 'latest'
+  })
+
+  
+  
+   console.log("DATA: ",JSON.stringify(jobs, null, 2))
+}
+
+async function runPrelease() {
   try {    
     let release = await calcReleaseBranch(currentMajor, prefix)
     if (preRelease) {
