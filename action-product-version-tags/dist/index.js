@@ -9976,27 +9976,17 @@ module.exports = function (octokit, owner, repo) {
     async function createBranch(branchName, sha) {
         console.log("branchName", branchName)
 
-        
+        // TODO: Review return on error
         try {
-            const branch = await octokit.repos.getBranch({
-                owner,
-                repo,
-                branch: branchName,
-              });
-              
-            if(branch) return false
-
             await octokit.git.createRef({
                 owner,
                 repo,
                 ref: `refs/heads/${branchName}`,
                 sha,
             }); 
-
             return true
-            
         } catch (err) {
-            throw err
+            return false
         }
 
     }
