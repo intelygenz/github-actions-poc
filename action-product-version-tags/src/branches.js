@@ -46,7 +46,7 @@ module.exports = function (octokit, owner, repo) {
             console.log("branchesWithPrefix",branchesWithPrefix)
 
             if(branchesWithPrefix.length === 0) {
-                return `${prefix}${major}.${minor}`
+                return `v${major}.${minor}`
             }
     
             const releaseBranch = branchesWithPrefix[0]
