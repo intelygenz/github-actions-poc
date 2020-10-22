@@ -2,23 +2,18 @@ name: CreateRelease
 
 on:
   workflow_dispatch:
-    inputs:
-      major:
-        description: 'Major version number'
-        required: true
-        default: 'false'
-      minor:
-        description: 'Minor version number'
-        required: true
-        default: 'true'
 
 jobs:
-  create_branch:
+  create-branch:
     runs-on: ubuntu-latest
     steps:
-        - uses: peterjgrainger/action-create-branch@v2.0.1
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          with:
-            branch: 'release-${{ github.event.inputs.major }}.${{ github.event.inputs.minor }}'
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Generate release branch
+        uses: ./action-product-version-tags
+        with:
+          prefix: "release-"
+          mode: 'release'
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         

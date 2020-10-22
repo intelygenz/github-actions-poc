@@ -5,20 +5,23 @@ branding:
   color: 'gray-dark'
 inputs:
   dry-run:
-    description: 'Enable dry run mode'
+    description: 'Enable dry run mode, expected "true" "false"'
     required: false
     default: 'false'
+  mode:
+    description: 'Execution mode can be "pre-release" "release" "fix"'
+    required: true
   current-major:
     description: 'Current major'
-    required: true
+    required: false
   prefix:
-    description: 'Release prefix'
+    description: 'Release prefix, e.g. "release-"'
     required: false
   pre-release:
-    description: 'A prerelease'
+    description: 'A prerelease, e.g. "alpha"'
     required: false
   default-branch:
-    description: "Default branch to create a version tag"
+    description: '"Default branch to create a version tag, e.g. "main"'
     required: false
     default: 'main'
 
@@ -27,4 +30,4 @@ outputs:
     description: 'The new version that was created and tagged in the format of <major>.<minor>.<build>[.<pre-release-tag>]'
 runs:
   using: 'node12'
-  main: 'dist/index.js'
+  main: 'action-product-version-tags/dist/index.js'

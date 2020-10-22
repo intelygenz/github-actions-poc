@@ -17,14 +17,24 @@ module.exports = function(octokit, owner, repo) {
             page++
           } while (data_length == 100)
         } catch (err) {
-            throw new Error(err)
+            throw err
         }
       
         return tagNames
     }
       
+    async function getLastReleaseTag() {
+        try {
+            const tagNames = await searchTagNames(octokit, owner, repo)
+            const tagsWithPrefix = tagNames.filter(tagName => tagName.match(`^v[0-9]+.[0-9]`))
+            if (tagsWithPrefix.length !== 0) return tagsWithPrefix[0]
+            return null
+        } catch (err) {
+            throw err
+        }
+    }
       
-    async function calcTagBranch(release, preRelease) {
+    async function calcPrereleaseTag(release, preRelease) {
         try {
             const tagNames = await searchTagNames(octokit, owner, repo)
             const tagsWithPrefix = tagNames.filter(tagName => tagName.match(`^${release}-${preRelease}`))
@@ -38,7 +48,7 @@ module.exports = function(octokit, owner, repo) {
             return `${release}-${preRelease}.${bumpVersion+1}`
         
         } catch (err) {
-            throw new Error(err)
+            throw err
         }
     }
       
@@ -69,8 +79,8 @@ module.exports = function(octokit, owner, repo) {
             });
             console.log("Tag ref created: ",createTagData.ref)
         } catch (err) {
-            throw new Error(err)
+            throw err
         }
     }
-    return {calcTagBranch, createTag}
+    return {calcPrereleaseTag, getLastReleaseTag, createTag}
 }

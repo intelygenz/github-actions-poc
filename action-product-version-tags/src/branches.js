@@ -17,20 +17,19 @@ module.exports = function (octokit, owner, repo) {
             page++
           } while (data_length == 100)
         } catch (err) {
-            throw new Error(err)
+            throw err
         }
 
         return branchNames.reverse()
     }
-    async function calcReleaseBranch(currentMajor, prefix) {
-        
+
+    async function calcPreReleaseBranch(currentMajor, prefix) {
         try {
             const branchNames = await searchBranchNames(octokit, owner, repo)
             let major = currentMajor
             let minor = 0
     
             const regex = new RegExp(`^${prefix}(\\d+).(\\d+)$`, 'g')
-    
             
             const greaterReleaseBranches = branchNames.filter(branchName => {
                 if(branchName.match(`^${prefix}${major+1}.[0-9]+$`)) return true
@@ -39,14 +38,15 @@ module.exports = function (octokit, owner, repo) {
     
             if(greaterReleaseBranches.length > 0) throw new Error('Branch with greater major version already exist')
     
-    
             const branchesWithPrefix = branchNames.filter(branchName => {
             if(branchName.match(`^${prefix}${major}.[0-9]+$`)) return true
-            return false
+                return false
             })
     
+            console.log("branchesWithPrefix",branchesWithPrefix)
+
             if(branchesWithPrefix.length === 0) {
-            return `${prefix}${major}.${minor}`
+                return `${prefix}${major}.${minor}`
             }
     
             const releaseBranch = branchesWithPrefix[0]
@@ -57,8 +57,37 @@ module.exports = function (octokit, owner, repo) {
             return `v${major}.${minor+1}`
     
         } catch (err) {
-            throw new Error(err)
+            throw err
         }
+        
     }
-    return {calcReleaseBranch} 
+
+    async function createBranch(branchName, sha) {
+        console.log("branchName", branchName)
+
+        
+        try {
+            const branch = await octokit.repos.getBranch({
+                owner,
+                repo,
+                branch: branchName,
+              });
+              
+            if(branch) return false
+
+            await octokit.git.createRef({
+                owner,
+                repo,
+                ref: `refs/heads/${branchName}`,
+                sha,
+            }); 
+
+            return true
+            
+        } catch (err) {
+            throw err
+        }
+
+    }
+    return {calcPreReleaseBranch, createBranch} 
 }

@@ -16,8 +16,9 @@ jobs:
       - name: Generate pre release tag
         uses: ./action-product-version-tags
         with:
-          current-major: 1
+          current-major: 0
           prefix: "release-"
+          mode: 'pre-release'
           pre-release: 'alpha'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
