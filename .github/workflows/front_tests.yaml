@@ -3,7 +3,7 @@ name: Front/Tests
 on:
   push:
     branches:
-        - "main"
+      - "main"
     tags-ignore:
       - v*
     paths:
