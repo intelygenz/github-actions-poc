@@ -1,9 +1,11 @@
 name: Fix
 
 on:
-  push:
-    branches:
-      - "release-*"
+  workflow_run:
+    workflows: ["Back/Tests", "Front/Tests"]
+    branches: ["release-*"]
+    types: 
+      - completed
 
 jobs:
   create-fix:
