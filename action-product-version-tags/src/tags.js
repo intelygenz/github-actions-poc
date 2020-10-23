@@ -23,10 +23,21 @@ module.exports = function(octokit, owner, repo) {
         return tagNames
     }
       
+    async function getLastPreReleaseTag() {
+        try {
+            const tagNames = await searchTagNames(octokit, owner, repo)
+            const tagsWithPrefix = tagNames.filter(tagName => tagName.match(`^v[0-9]+.[0-9]+-`))
+            if (tagsWithPrefix.length !== 0) return tagsWithPrefix[0]
+            return null
+        } catch (err) {
+            throw err
+        }
+    }
+
     async function getLastReleaseTag() {
         try {
             const tagNames = await searchTagNames(octokit, owner, repo)
-            const tagsWithPrefix = tagNames.filter(tagName => tagName.match(`^v[0-9]+.[0-9]`))
+            const tagsWithPrefix = tagNames.filter(tagName => tagName.match(`^v[0-9]+.[0-9]+.[0-9]+$`))
             if (tagsWithPrefix.length !== 0) return tagsWithPrefix[0]
             return null
         } catch (err) {
@@ -82,5 +93,5 @@ module.exports = function(octokit, owner, repo) {
             throw err
         }
     }
-    return {calcPrereleaseTag, getLastReleaseTag, createTag}
+    return {calcPrereleaseTag, getLastPreReleaseTag, getLastReleaseTag, createTag}
 }

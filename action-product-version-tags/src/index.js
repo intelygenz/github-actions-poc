@@ -10,7 +10,7 @@ const [owner, repo] = process.env.GITHUB_REPOSITORY.split("/")
 const {readWorkflowsAndFilterByName,checkWorkflowDeps} = require('./workflows')(octokit, owner, repo)
 
 const { calcPreReleaseBranch, createBranch } = require('./branches')(octokit, owner, repo)
-const { calcPrereleaseTag, getLastReleaseTag ,createTag } = require('./tags')(octokit, owner, repo)
+const { calcPrereleaseTag, getLastPreReleaseTag, getLastReleaseTag, createTag } = require('./tags')(octokit, owner, repo)
 
 
 // Input variables
@@ -35,10 +35,10 @@ async function main() {
 
     switch(mode){
       case 'pre-release':
-        if(checkPrereleaseRequirements(core, preRelease)) runPrelease()
+        if(checkPrereleaseRequirements(core, preRelease)) runPreRelease()
         break
       case 'release':
-        runRelease(prefix)
+        runRelease(prefix,defaultBranch)
         break
       case 'fix':
         runFix()
@@ -50,26 +50,55 @@ async function main() {
   }
 }
 
-async function runRelease(prefix) {
+async function runFix() {
   try {
-    
     const tag = await getLastReleaseTag()
+    if(!tag) return core.setFailed('There are any release yet')
+    
+    const regex = new RegExp(`^v(\\d+).(\\d+).(\\d+)$`, 'g')
+    const matches = regex.exec(tag)
+    const major = parseInt(matches[1]);
+    const minor = parseInt(matches[2]);
+    const patch = parseInt(matches[3]);
+
+    const releaseBranch = `${prefix}${major}.${minor}`
+    const fixTag = `v${major}.${minor}.${patch+1}`
+    if (!dryRun) await createTag(fixTag, releaseBranch)
+
+    core.setOutput("release-version", fixTag)
+    console.log(`🚀 New fix '${fixTag}' created`)
+  
+  } catch (err) {
+    throw err
+  }
+}
+
+async function runRelease(prefix, defaultBranch) {
+  try {
+
+    const tag = await getLastPreReleaseTag()
     if(!tag) return core.setFailed('There are any pre-release yet')
     
     const regex = new RegExp(`^v(\\d+).(\\d+)`, 'g')
     const matches = regex.exec(tag)
-    console.log(tag)
     const major = parseInt(matches[1]);
     const minor = parseInt(matches[2]);
 
     const release = `${prefix}${major}.${minor}`
-    const created = await createBranch(release, github.context.sha)
+    const releaseTag = `v${major}.${minor}.0`
+    if (!dryRun) {
+      const created = await createBranch(release, github.context.sha)
 
-    if(!created) return core.setFailed(`The release branch '${release}' already exist`)
-    
-    core.setOutput("release", release)
-    console.log(`🚀 New release '${release}' created`)
-    
+      if(!created) return core.setFailed(`The release branch '${release}' already exist`)
+      
+      await createTag(releaseTag, defaultBranch)
+    }
+
+    console.log(`🚀 New release '${release}' created`)    
+    console.log(`🚀 New release tag '${releaseTag}' created`)
+
+    core.setOutput("release-version", releaseTag)
+
   } catch (err) {
     throw err
   }
@@ -83,8 +112,11 @@ function checkPrereleaseRequirements (core,preRelease) {
   return true
 }
 
-async function runPrelease() {
+async function runPreRelease() {
   try {    
+
+     // TODO: (to implement) In case of increase a new major version check if the last alpha
+    // has a current release.
 
     // TODO: Change calcPreReleaseBranch to getPreReleaseVersion
     let preReleaseBranch = await calcPreReleaseBranch(currentMajor, prefix)
@@ -96,15 +128,10 @@ async function runPrelease() {
   
     if (!dryRun) createTag(preReleaseTag, defaultBranch)
 
-    core.setOutput("pre-release-tag", preReleaseTag)
     console.log(`🚀 New pre-release tag '${preReleaseTag}' created`)
+    core.setOutput("release-version", preReleaseTag)
 
   } catch (error) {
     core.setFailed(error.message);
   }
-}
-
-
-async function runFix() {
-  
 }

@@ -43,8 +43,6 @@ module.exports = function (octokit, owner, repo) {
                 return false
             })
     
-            console.log("branchesWithPrefix",branchesWithPrefix)
-
             if(branchesWithPrefix.length === 0) {
                 return `v${major}.${minor}`
             }
