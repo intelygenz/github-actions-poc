@@ -1,4 +1,4 @@
-name: PreReleaseTag
+name: PreRelease
 
 on:
   workflow_run:
@@ -13,9 +13,10 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Generate pre release tag
+      - name: Generate a pre-release
         uses: ./action-product-version-tags
         with:
+          # TODO: Rename prefix release and pre-release fields to branch-prefix and tag-prefix
           current-major: 0
           prefix: "release-"
           mode: 'pre-release'

@@ -1,19 +1,21 @@
-name: CreateRelease
+name: Fix
 
 on:
-  workflow_dispatch:
+  push:
+    branches:
+      - "release-*"
 
 jobs:
-  create-branch:
+  create-fix:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Generate release branch
+      - name: Generate a fix
         uses: ./action-product-version-tags
         with:
           prefix: "release-"
-          mode: 'release'
+          mode: 'fix'
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         
