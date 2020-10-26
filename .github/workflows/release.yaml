@@ -10,7 +10,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Generate a release
-        uses: intelygenz/action-product-version-tags@v0.1.1
+        uses: intelygenz/action-product-version-tags@v0.1.2
         with:
           prefix: "release-"
           mode: 'release'
