@@ -26,6 +26,7 @@ main()
 
 async function main() {
   try {
+    console.log("GITHUB CONTEXT: ", JSON.stringify(github, null, 2))
     const workflow = readWorkflowsAndFilterByName(github.context.workflow)
     // TODO: Clean this code
     if (workflow.on && workflow.on.workflow_run && workflow.on.workflow_run.workflows) {
