@@ -3,7 +3,7 @@ name: Front/DockerBuild
 on:
   push:
     tags:
-    - "release*"
+    - "v*"
 
 jobs:
   docker-build:
@@ -18,13 +18,12 @@ jobs:
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
-          registry: ghcr.io
-          username: ${{ github.repository_owner }}
-          password: ${{ secrets.CR_PAT }}
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_TOKEN }}
 
       - name: Get Version
         id: get_version
-        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/release-}
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
 
       - name: Push to GitHub Packages
         uses: docker/build-push-action@v2
@@ -33,5 +32,5 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: |
-            ghcr.io/intelygenz/github-actions-poc/front:${{ steps.get_version.outputs.VERSION }}
-            ghcr.io/intelygenz/github-actions-poc/front:latest
+            terminus7/front-poc:${{ steps.get_version.outputs.VERSION }}
+            terminus7/front-poc:latest
