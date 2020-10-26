@@ -14,7 +14,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Generate a pre-release
-        uses: intelygenz/action-product-version-tags@v0.1.2
+        uses: intelygenz/action-product-version-tags@v0.1.3
         with:
           # TODO: Rename prefix release and pre-release fields to branch-prefix and tag-prefix
           current-major: 0

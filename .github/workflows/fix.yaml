@@ -16,7 +16,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Generate a fix
-        uses: intelygenz/action-product-version-tags@v0.1.2
+        uses: intelygenz/action-product-version-tags@v0.1.3
         with:
           prefix: "release-"
           mode: 'fix'
