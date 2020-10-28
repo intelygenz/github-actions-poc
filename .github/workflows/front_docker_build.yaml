@@ -1,9 +1,9 @@
 name: Front/DockerBuild
 
 on:
-  create:
+  push:
     tags:
-    - v*
+    - '*'
 
 jobs:
   docker-build:
