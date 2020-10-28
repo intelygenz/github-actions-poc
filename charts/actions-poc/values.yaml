@@ -9,4 +9,4 @@ back:
     repository: terminus7/back-poc
     tag: latest
     pullPolicy: Always
-  hostname: back-poc3.local
+  hostname: back-poc.local
