@@ -1,7 +1,7 @@
 name: Front/DockerBuild
 
 on:
-  push:
+  create:
     tags:
     - v*
 

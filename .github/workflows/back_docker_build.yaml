@@ -1,7 +1,7 @@
 name: Back/DockerBuild
 
 on:
-  push:
+  create:
     tags:
     - v*
 
