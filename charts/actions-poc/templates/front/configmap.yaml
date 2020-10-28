@@ -1,0 +1,9 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: front-poc
+data:
+  config.json: |
+    {
+      "API_BASE_URL": "http://{{ .Values.back.hostname }}"
+    }
