@@ -22,4 +22,4 @@ jobs:
           mode: 'pre-release'
           pre-release: 'alpha'
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PATNAME }}
