@@ -1,9 +1,9 @@
 name: Back/DockerBuild
 
 on:
-  create:
+  push:
     tags:
-    - v*
+    - '*'
 
 jobs:
   docker-build:
