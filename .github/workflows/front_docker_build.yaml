@@ -3,7 +3,7 @@ name: Front/DockerBuild
 on:
   push:
     tags:
-    - '*'
+      - 'v*.*.*'
 
 jobs:
   docker-build:
