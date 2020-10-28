@@ -10,3 +10,4 @@ back:
     tag: latest
     pullPolicy: Always
   hostname: back-poc.local
+  demo: test
