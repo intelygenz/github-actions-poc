@@ -18,11 +18,20 @@ jobs:
         run: |
           git config user.name "$GITHUB_ACTOR"
           git config user.email "$GITHUB_ACTOR@users.noreply.github.com"
+      
+      - name: Get Version
+        id: get_version
+        run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+
+      - uses: chrisdickinson/setup-yq@latest
+        name: Show folks how to run YQ
+        run:  |
+          yq w -i helm/actions-poc/values.yaml '*.image.tag' ${{ steps.get_version.outputs.VERSION }}
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.0.0
         with:
-          charts_dir: 'charts'
+          charts_dir: 'helm'
           charts_repo_url: 'https://intelygenz.github.io/github-actions-poc'
         env:
           CR_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
