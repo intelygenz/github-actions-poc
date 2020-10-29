@@ -31,6 +31,7 @@ jobs:
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.0.0
         with:
+          version: ${{ steps.get_version.outputs.VERSION }}
           charts_dir: 'helm'
           charts_repo_url: 'https://intelygenz.github.io/github-actions-poc'
         env:
