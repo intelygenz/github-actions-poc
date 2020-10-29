@@ -27,8 +27,9 @@ jobs:
       - name: Show folks how to run YQ
         run:  |
           yq w -i helm/actions-poc/values.yaml '*.image.tag' ${{ steps.get_version.outputs.VERSION }}
-          yq w -i helm/actions-poc/Chart.yaml 'version' ${{ steps.get_version.outputs.VERSION }}
           yq w -i helm/actions-poc/Chart.yaml 'appVersion' ${{ steps.get_version.outputs.VERSION }}
+          RELEASE=`echo "${{ steps.get_version.outputs.VERSION }}" | sed -e 's/v//g' | sed -e 's/-alpha.*/.0/g'`
+          yq w -i helm/actions-poc/Chart.yaml 'version' $RELEASE
 
       - name: Run chart-releaser
         uses: helm/chart-releaser-action@v1.0.0
