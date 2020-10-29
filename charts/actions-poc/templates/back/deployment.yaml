@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: back-poc
+  labels:
+    app: back-poc
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: back-poc
+  template:
+    metadata:
+      labels:
+        app: back-poc
+    spec:
+      containers:
+        - name: back-poc
+          image: "{{ .Values.back.image.repository }}:{{ .Values.back.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.back.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 3000
+              protocol: TCP
+          

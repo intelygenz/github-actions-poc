@@ -1,0 +1,19 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: back-poc
+  labels:
+    app: back-poc
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  rules:
+    - host: back-poc.local
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: back-poc
+              servicePort: 80
+ 

@@ -1,0 +1,12 @@
+front:
+  image:
+    repository: terminus7/front-poc
+    tag: latest
+    pullPolicy: Always
+
+back:
+  image:
+    repository: terminus7/back-poc
+    tag: latest
+    pullPolicy: Always
+  hostname: back-poc.local

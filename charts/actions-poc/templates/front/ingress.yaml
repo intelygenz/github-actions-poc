@@ -1,0 +1,18 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: front-poc
+  labels:
+    app: front-poc
+    chart: "{{ .Chart.Name }}-{{ .Chart.Version | replace "+" "_" }}"
+    release: "{{ .Release.Name }}"
+    heritage: "{{ .Release.Service }}"
+spec:
+  rules:
+    - host: front-poc.local
+      http:
+        paths:
+          - path: /
+            backend:
+              serviceName: front-poc
+              servicePort: 80

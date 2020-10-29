@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: front-poc
+  labels:
+    app: front-poc
+spec:
+  selector:
+    matchLabels:
+      app: front-poc
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: front-poc
+    spec:
+      containers:
+        - name: {{ .Chart.Name }}
+          image: "{{ .Values.front.image.repository }}:{{ .Values.front.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: config-volume
+              mountPath: /usr/share/nginx/html/config/config.json
+              subPath: config.json
+          ports:
+            - name: http
+              containerPort: 80
+              protocol: TCP
+      volumes:
+        - name: config-volume
+          configMap:
+            name: front-poc
+  
