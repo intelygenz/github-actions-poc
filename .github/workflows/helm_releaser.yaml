@@ -24,7 +24,7 @@ jobs:
         run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
 
       - uses: chrisdickinson/setup-yq@latest
-        name: Show folks how to run YQ
+      - name: Show folks how to run YQ
         run:  |
           yq w -i helm/actions-poc/values.yaml '*.image.tag' ${{ steps.get_version.outputs.VERSION }}
 
