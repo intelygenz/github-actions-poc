@@ -2,6 +2,16 @@ apiVersion: v1
 entries:
   actions-poc:
   - apiVersion: v2
+    appVersion: v0.1.1
+    created: "2020-10-30T10:40:24.410356233Z"
+    description: A Helm chart for Kubernetes
+    digest: 9f140759b61cd86f02f6eda8b404959ae53dc816d263c556cafb7a4b4d0c04b4
+    name: actions-poc
+    type: application
+    urls:
+    - https://github.com/intelygenz/github-actions-poc/releases/download/actions-poc-0.1.1/actions-poc-0.1.1.tgz
+    version: 0.1.1
+  - apiVersion: v2
     appVersion: v0.1-alpha.0
     created: "2020-10-30T10:23:35.430643422Z"
     description: A Helm chart for Kubernetes
