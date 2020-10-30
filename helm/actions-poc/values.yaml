@@ -3,6 +3,7 @@ front:
     repository: terminus7/front-poc
     tag: v0.1.0
     pullPolicy: Always
+  hostname: front-poc.local
 back:
   image:
     repository: terminus7/back-poc

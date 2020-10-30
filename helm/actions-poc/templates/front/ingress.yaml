@@ -9,7 +9,7 @@ metadata:
     heritage: "{{ .Release.Service }}"
 spec:
   rules:
-    - host: front-poc.local
+    - host: {{ .Values.front.hostname }}
       http:
         paths:
           - path: /
