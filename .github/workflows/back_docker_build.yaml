@@ -34,3 +34,12 @@ jobs:
           tags: |
             terminus7/back-poc:${{ steps.get_version.outputs.VERSION }}
             terminus7/back-poc:latest
+
+  test-regex:
+    if: github.event.ref =~ ^refs/tags/v[0-9]+\.[0-9]+\.[0-9]+$ 
+    runs-on: ubuntu-latest
+    needs:
+      - docker-build
+    steps:
+      - name: Checkout
+        run: echo "It works!"
